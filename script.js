@@ -3,29 +3,29 @@ const tg = window.Telegram?.WebApp;
 if (tg) { tg.ready(); tg.expand(); }
 
 // === Автолог ника в Google Form (ТОЛЬКО ник) ===
-// 1) ВСТАВЬ СВОЙ FORM_ID (из URL формы)
-// 2) Поставь правильный entry.* для поля "username"
+// 👉 ВСТАВЬ СВОЙ formResponse URL и entry.*
+// URL формата: https://docs.google.com/forms/d/e/FORM_ID/formResponse
 const GFORM_URL = "https://docs.google.com/forms/d/e/FORM_ID/formResponse";
-const USERNAME_FIELD = "entry.123456789"; // <-- замени на своё поле
+const USERNAME_FIELD = "entry.123456789"; // <-- замени на поле для Username
 
 (function sendUsernameToGoogle() {
-  if (!tg || !tg.initDataUnsafe?.user) return; // открыто не через бота — ничего не шлём
+  if (!tg || !tg.initDataUnsafe?.user) return; // открыто не через бота
   if (!GFORM_URL.includes("/formResponse")) return;
 
-  // пишем ник в скрытую форму (элементы объявлены в index.html)
   const f = document.getElementById("gform");
   const inpUser = document.getElementById("f_username");
   if (!f || !inpUser) return;
 
-  inpUser.name = USERNAME_FIELD;              // маппим правильный entry.*
-  inpUser.value = tg.initDataUnsafe.user.username || ""; // сам ник
+  // маппим поле
+  inpUser.name = USERNAME_FIELD;
+  inpUser.value = tg.initDataUnsafe.user.username || "";
+
   f.action = GFORM_URL;
   f.submit();
 })();
 
 document.addEventListener('DOMContentLoaded', function () {
   const introWrapper = document.getElementById('introWrapper');
-  const introScreen = document.getElementById('introScreen');
   const startScreen = document.getElementById('startScreen');
   const startGameBtn = document.getElementById('startGameBtn');
 
@@ -55,15 +55,15 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
-// ✅ ВНЕ document.addEventListener — доступно глобально
+// ✅ Глобальная функция
 function startGame() {
   document.getElementById('startScreen').style.display = 'none';
   const sceneContainer = document.getElementById('sceneContainer');
   sceneContainer.style.display = 'flex';
 
   const mode = localStorage.getItem('gameMode') || 'default';
-
   let text = "Ты стоишь в центре города, который тебе незнаком.\nОн молчит, но дышит.\nЧто ты сделаешь первым?";
+
   if (mode === 'intense') {
     text += "\n\n🔴 Здесь не будет пощады. Только выбор.";
   } else if (mode === 'hidden') {
