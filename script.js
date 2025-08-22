@@ -2,26 +2,27 @@
 const tg = window.Telegram?.WebApp;
 if (tg) { tg.ready(); tg.expand(); }
 
-// === Автолог ника в Google Form (ТОЛЬКО ник) ===
-// 👉 ВСТАВЬ СВОЙ formResponse URL и entry.*
-// URL формата: https://docs.google.com/forms/d/e/FORM_ID/formResponse
-const GFORM_URL = "https://docs.google.com/forms/d/e/FORM_ID/formResponse";
-const USERNAME_FIELD = "entry.123456789"; // <-- замени на поле для Username
+// === ЛОГ В ТАБЛИЦУ ЧЕРЕЗ APPS SCRIPT ===
+const ENDPOINT = 'https://script.google.com/macros/s/XXXX/exec'; // <-- твой URL деплоя
+const SECRET   = 'COMEIN_SECRET_123'; // тот же, что в коде Apps Script
 
-(function sendUsernameToGoogle() {
-  if (!tg || !tg.initDataUnsafe?.user) return; // открыто не через бота
-  if (!GFORM_URL.includes("/formResponse")) return;
+(function logToSheet() {
+  const u = tg?.initDataUnsafe?.user;
+  if (!u || !ENDPOINT) return; // открыто не через бота — нечего шлём
 
-  const f = document.getElementById("gform");
-  const inpUser = document.getElementById("f_username");
-  if (!f || !inpUser) return;
+  const payload = {
+    secret:   SECRET,
+    tgId:     u.id,
+    username: u.username || '',
+    source:   tg.initDataUnsafe?.start_param || 'без метки'
+    // дату поставит скрипт сам
+  };
 
-  // маппим поле
-  inpUser.name = USERNAME_FIELD;
-  inpUser.value = tg.initDataUnsafe.user.username || "";
-
-  f.action = GFORM_URL;
-  f.submit();
+  fetch(ENDPOINT, {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify(payload)
+  }).catch(()=>{});
 })();
 
 document.addEventListener('DOMContentLoaded', function () {
