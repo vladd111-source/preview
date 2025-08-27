@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <title>COMEIN</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -23,61 +24,49 @@
   </div>
 
   <!-- Экран старта -->
-  <div id="startScreen">
+  <div id="startScreen" style="display:none">
     <h2>Ты сделал выбор</h2>
     <p>Теперь город будет действовать по-своему</p>
     <button id="startGameBtn">🚪 Войти в город</button>
   </div>
 
-  <div id="sceneContainer" style="display: none; flex-direction: column; align-items: center; justify-content: center; height: 100vh; background: #111; color: white; padding: 30px; text-align: center;">
-  <p id="sceneText" style="font-size: 18px; margin-bottom: 30px;">
-    ...
-  </p>
-  <div id="sceneChoices">
-    <button class="scene-btn">Вариант 1</button>
-    <button class="scene-btn">Вариант 2</button>
+  <!-- Сцены -->
+  <div id="sceneContainer" style="display:none; flex-direction:column; align-items:center; justify-content:center; height:100vh; background:#111; color:white; padding:30px; text-align:center;">
+    <p id="sceneText" style="font-size:18px; margin-bottom:30px;">...</p>
+    <div id="sceneChoices"></div>
   </div>
-</div>
 
+  <!-- Модалка -->
   <div id="modalOverlay" style="
-  display: none;
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0, 0, 0, 0.8);
-  z-index: 9999;
-  align-items: center;
-  justify-content: center;
-  padding: 30px;
-  text-align: center;
-  color: white;
-  font-family: 'Helvetica Neue', sans-serif;
-">
-  <div style="max-width: 400px; background: #111; padding: 20px 25px; border-radius: 10px;">
-    <h3 style="margin-bottom: 15px;">🔥 COMEIN ещё дорабатывается</h3>
-    <p style="font-size: 15px; color: #ccc; margin-bottom: 25px;">
-      Мы сейчас тестируем механику. Ты попал в закрытый доступ.  
-      Мы оповестим тебя, когда игра будет готова.
-    </p>
-    <button id="closeModalBtn" style="
-      padding: 12px 24px;
-      background: #e50914;
-      border: none;
-      border-radius: 6px;
-      color: white;
-      font-size: 14px;
-      cursor: pointer;
-    ">Ок, жду</button>
+    display:none;
+    position:fixed;top:0;left:0;right:0;bottom:0;
+    background:rgba(0,0,0,0.8);
+    z-index:9999;
+    align-items:center;
+    justify-content:center;
+    padding:30px;
+    text-align:center;
+    color:white;
+    font-family:'Helvetica Neue',sans-serif;
+  ">
+    <div style="max-width:400px; background:#111; padding:20px 25px; border-radius:10px;">
+      <h3 style="margin-bottom:15px;">🔥 COMEIN ещё дорабатывается</h3>
+      <p style="font-size:15px; color:#ccc; margin-bottom:25px;">
+        Мы сейчас тестируем механику. Ты попал в закрытый доступ.  
+        Мы оповестим тебя, когда игра будет готова.
+      </p>
+      <button id="closeModalBtn" style="
+        padding:12px 24px;
+        background:#e50914;
+        border:none;
+        border-radius:6px;
+        color:white;
+        font-size:14px;
+        cursor:pointer;
+      ">Ок, жду</button>
+    </div>
   </div>
-</div>
-  
 
   <script src="script.js"></script>
-
-  <!-- Скрытая форма для отправки НИКА в Google Form (обход CORS) -->
-<iframe name="gform_target" style="display:none"></iframe>
-<form id="gform" target="gform_target" method="POST" style="display:none">
-  <input id="f_username" value="">
-</form>
-  
 </body>
 </html>
