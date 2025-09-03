@@ -8,7 +8,7 @@ if (tg) {
 }
 
 // 2) ЛОГ В GOOGLE SHEETS через Apps Script (no-cors FormData)
-const ENDPOINT = 'https://script.google.com/macros/s/AKfycbyM1E-nrXVOq4HFhrjLfyPWuZp_MA_n0NynlU4QC-mkqhaSCjBb8OJLZUY3W9kE9_YH/exec;
+const ENDPOINT = 'https://script.google.com/macros/s/AKfycbyM1E-nrXVOq4HFhrjLfyPWuZp_MA_n0NynlU4QC-mkqhaSCjBb8OJLZUY3W9kE9_YH/exec';
 const SECRET   = 'COMEIN_SECRET_123';
 
 // — минимальный визуальный дебаг
