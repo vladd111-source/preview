@@ -20,11 +20,24 @@ const __dbg = (msg) => { try {
   if (!u) { __dbg('NO TG USER (открыто не через бота)'); return; }
   if (!ENDPOINT || !ENDPOINT.includes('/exec')) { __dbg('BAD ENDPOINT'); return; }
 
+  // определяем источник
+  let source = 'без метки';
+  if (tg?.initDataUnsafe?.start_param) {
+    source = tg.initDataUnsafe.start_param;
+  } else if (tg?.initDataUnsafe?.startapp) {
+    source = tg.initDataUnsafe.startapp;
+  } else {
+    const url = new URL(window.location.href);
+    source = url.searchParams.get('startapp')
+          || url.searchParams.get('start')
+          || 'без метки';
+  }
+
   const fd = new FormData();
   if (SECRET) fd.append('secret', SECRET);
   fd.append('tgId', String(u.id));
   fd.append('username', u.username || '');
-  fd.append('source', tg.initDataUnsafe?.start_param || 'без метки');
+  fd.append('source', source);
 
   fetch(ENDPOINT, { method:'POST', body: fd, mode:'no-cors' })
     .then(() => __dbg('LOG TRY: ' + (u.username || u.id)))
@@ -51,7 +64,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const pickIntense = () => { localStorage.setItem('gameMode', 'intense'); transitionToStart(); };
   const pickHidden  = () => { localStorage.setItem('gameMode', 'hidden');  transitionToStart(); };
 
-  // iOS/Telegram: вешаем и click, и touchend
   ['click', 'touchend'].forEach(ev => {
     on(modeIntense, ev, pickIntense);
     on(modeHidden,  ev, pickHidden);
@@ -100,11 +112,9 @@ function showComingSoonModal() {
 
   const close = document.getElementById('closeModalBtn');
   const handler = () => {
-    // закрываем мини-апп у пользователя
     if (window.Telegram?.WebApp) {
       try { window.Telegram.WebApp.close(); return; } catch(_) {}
     }
-    // фоллбек — просто скрыть модалку
     modal.style.display = 'none';
   };
 
