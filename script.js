@@ -8,8 +8,8 @@ if (tg) {
 }
 
 // 2) ЛОГ В GOOGLE SHEETS через Apps Script (no-cors FormData)
-const ENDPOINT = 'https://script.google.com/macros/s/AKfycbyM1E-nrXVOq4HFhrjLfyPWuZp_MA_n0NynlU4QC-mkqhaSCjBb8OJLZUY3W9kE9_YH/exec';
-const SECRET   = 'COMEIN_SECRET_123';
+const ENDPOINT = 'https://script.google.com/macros/s/AKfycbyM1E-nrXVOq4HFhrjLfyPWuZp_MA_n0NynlU4QC-mkqhaSCjBb8OJLZUY3W9kE9_YH/exec'; // твой exec URL
+const SECRET   = 'COMEIN_SECRET_123'; // тот же, что в Код.gs
 
 // — минимальный визуальный дебаг
 const __dbg = (msg) => {
@@ -117,63 +117,4 @@ function showComingSoonModal() {
   modal.style.display = 'flex';
   const close = document.getElementById('closeModalBtn');
   ['click','touchend'].forEach(ev => close.addEventListener(ev, () => { modal.style.display = 'none'; }, { passive:true, once:true }));
-}    transitionToStart();
-  });
-
-  function transitionToStart() {
-    introWrapper.style.display = 'none';
-    startScreen.style.display  = 'flex';
-    startScreen.style.opacity  = 1;
-  }
-
-  startGameBtn.addEventListener('click', () => {
-    const mode = localStorage.getItem('gameMode') || 'default';
-    let modeText = (mode === 'intense') ? 'НА ПРЕДЕЛЕ'
-                 : (mode === 'hidden') ? 'СКРЫТНО'
-                 : 'ОБЫЧНЫЙ';
-    alert("Игра начинается в режиме: " + modeText);
-    startGame();
-  });
-});
-
-// ✅ Глобальная функция
-function startGame() {
-  document.getElementById('startScreen').style.display = 'none';
-  const sceneContainer = document.getElementById('sceneContainer');
-  sceneContainer.style.display = 'flex';
-
-  const mode = localStorage.getItem('gameMode') || 'default';
-  let text = "Ты стоишь в центре города, который тебе незнаком.\nОн молчит, но дышит.\nЧто ты сделаешь первым?";
-
-  if (mode === 'intense') {
-    text += "\n\n🔴 Здесь не будет пощады. Только выбор.";
-  } else if (mode === 'hidden') {
-    text += "\n\n🌒 Здесь всё завуалировано. И тебя будут проверять.";
-  }
-
-  document.getElementById('sceneText').innerText = text;
-
-  const sceneChoices = document.getElementById('sceneChoices');
-  sceneChoices.innerHTML = '';
-
-  const btn1 = document.createElement('button');
-  btn1.className = 'scene-btn';
-  btn1.innerText = '📍 Осмотреться вокруг';
-  btn1.onclick = () => showComingSoonModal();
-
-  const btn2 = document.createElement('button');
-  btn2.className = 'scene-btn';
-  btn2.innerText = '🚪 Пойти наугад в переулок';
-  btn2.onclick = () => showComingSoonModal();
-
-  sceneChoices.appendChild(btn1);
-  sceneChoices.appendChild(btn2);
-}
-
-function showComingSoonModal() {
-  const modal = document.getElementById('modalOverlay');
-  modal.style.display = 'flex';
-  document.getElementById('closeModalBtn').addEventListener('click', () => {
-    modal.style.display = 'none';
-  });
 }
