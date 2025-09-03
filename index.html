@@ -7,6 +7,11 @@
   <meta name="theme-color" content="#000000">
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* фиксы тачей в Telegram WebView */
+    * { -webkit-tap-highlight-color: transparent; }
+    .overlay { pointer-events: none; } /* затемнение не перехватывает клики */
+  </style>
 </head>
 <body>
 
@@ -52,7 +57,7 @@
     <div style="max-width:400px; background:#111; padding:20px 25px; border-radius:10px;">
       <h3 style="margin-bottom:15px;">🔥 COMEIN ещё дорабатывается</h3>
       <p style="font-size:15px; color:#ccc; margin-bottom:25px;">
-        Мы сейчас тестируем механику. Ты попал в закрытый доступ.  
+        Мы сейчас тестируем механику. Ты попал в закрытый доступ.
         Мы оповестим тебя, когда игра будет готова.
       </p>
       <button id="closeModalBtn" style="
@@ -67,6 +72,7 @@
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <!-- Подключаем JS с bust-параметром, чтобы GitHub Pages не кэшировал старое -->
+  <script src="script.js?v=6"></script>
 </body>
 </html>
