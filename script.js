@@ -5,7 +5,7 @@ const tg = window.Telegram?.WebApp;
 if (tg) { tg.ready(); tg.expand(); }
 
 // ЛОГ В GOOGLE SHEETS через Apps Script (FormData + no-cors)
-const ENDPOINT = 'https://script.google.com/macros/s/AKfycbyM1E-nrXVOq4HFhrjLfyPWuZp_MA_n0NynlU4QC-mkqhaSCjBb8OJLZUY3W9kE9_YH/exec'; // твой exec URL
+const ENDPOINT = 'https://script.google.com/macros/s/AKfycbwy0Hhvj8FVeefiPez07nYt0mwzJYUDxjm3QgGGXqWVAX0u72klmuMtY9OYsUax_Po5/exec'; // твой exec URL
 const SECRET   = 'COMEIN_SECRET_123'; // должен совпадать с Код.gs (или оставь SECRET='' в Код.gs, чтобы выключить проверку)
 
 // Мини-дебаг внизу экрана
