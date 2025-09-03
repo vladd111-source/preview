@@ -8,7 +8,7 @@ if (tg) {
 }
 
 // 2) ЛОГ В GOOGLE SHEETS через Apps Script (БЕЗ форм)
-const ENDPOINT = 'https://script.google.com/macros/s/XXXX/exec'; // ⬅️ ВСТАВЬ СВОЙ URL деплоя
+const ENDPOINT = 'https://script.google.com/macros/s/AKfycbx3ApuSQU8yFjNpJiS3zMZ5whtRJrF6peYVoqRJoyoCSGGw1xgD7KJy65g8aiEt2VVJ/exec; // ⬅️ ВСТАВЬ СВОЙ URL деплоя
 const SECRET   = 'COMEIN_SECRET_123';                              // ⬅️ тот же, что в Код.gs
 
 // — минимальный визуальный дебаг (видно прямо в приложении)
