@@ -36,8 +36,9 @@ document.addEventListener('DOMContentLoaded', function () {
   const introWrapper = document.getElementById('introWrapper');
   const startScreen  = document.getElementById('startScreen');
   const startGameBtn = document.getElementById('startGameBtn');
-  const modeIntense  = document.getElementById('modeIntense');
-  const modeHidden   = document.getElementById('modeHidden');
+
+  const modeIntense = document.getElementById('modeIntense');
+  const modeHidden  = document.getElementById('modeHidden');
 
   const on = (el, ev, fn) => el && el.addEventListener(ev, fn, { passive: true });
 
@@ -46,21 +47,24 @@ document.addEventListener('DOMContentLoaded', function () {
     startScreen.style.display  = 'flex';
     startScreen.style.opacity  = 1;
   };
+
   const pickIntense = () => { localStorage.setItem('gameMode', 'intense'); transitionToStart(); };
   const pickHidden  = () => { localStorage.setItem('gameMode', 'hidden');  transitionToStart(); };
 
-  ['click','touchend'].forEach(ev => {
+  // iOS/Telegram: вешаем и click, и touchend
+  ['click', 'touchend'].forEach(ev => {
     on(modeIntense, ev, pickIntense);
     on(modeHidden,  ev, pickHidden);
   });
 
   const startHandler = () => {
     const mode = localStorage.getItem('gameMode') || 'default';
-    const modeText = mode==='intense' ? 'НА ПРЕДЕЛЕ' : mode==='hidden' ? 'СКРЫТНО' : 'ОБЫЧНЫЙ';
-    try { alert('Игра начинается в режиме: ' + modeText); } catch(_){}
+    const modeText = (mode === 'intense') ? 'НА ПРЕДЕЛЕ' : (mode === 'hidden') ? 'СКРЫТНО' : 'ОБЫЧНЫЙ';
+    try { alert('Игра начинается в режиме: ' + modeText); } catch(_) {}
     startGame();
   };
-  ['click','touchend'].forEach(ev => on(startGameBtn, ev, startHandler));
+
+  ['click', 'touchend'].forEach(ev => on(startGameBtn, ev, startHandler));
 });
 
 // Глобальная функция
@@ -93,6 +97,18 @@ function startGame() {
 function showComingSoonModal() {
   const modal = document.getElementById('modalOverlay');
   modal.style.display = 'flex';
+
   const close = document.getElementById('closeModalBtn');
-  ['click','touchend'].forEach(ev => close.addEventListener(ev, () => { modal.style.display='none'; }, { passive:true, once:true }));
+  const handler = () => {
+    // закрываем мини-апп у пользователя
+    if (window.Telegram?.WebApp) {
+      try { window.Telegram.WebApp.close(); return; } catch(_) {}
+    }
+    // фоллбек — просто скрыть модалку
+    modal.style.display = 'none';
+  };
+
+  ['click','touchend'].forEach(ev =>
+    close.addEventListener(ev, handler, { passive:true, once:true })
+  );
 }
